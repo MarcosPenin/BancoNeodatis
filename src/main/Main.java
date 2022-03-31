@@ -5,8 +5,10 @@ import org.neodatis.odb.ODBServer;
 
 import conexion.ClienteODB;
 import conexion.Servidor;
+import controlador.Consultar;
 import controlador.CrearBase;
 import controlador.Insertar;
+import controlador.Modificar;
 import vista.VerMenu;
 
 public class Main {
@@ -17,7 +19,7 @@ public class Main {
 		//VerMenu.menuPrincipal(odb);
 		
 		//Insertar.insertarCuentaPlazo(odb);
-		Insertar.insertarMovimiento(odb);
+		Consultar.clientesEmpiezanC(odb);
 		
 		
 		odb.commit();
