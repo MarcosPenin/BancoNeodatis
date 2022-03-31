@@ -1,6 +1,5 @@
 package modelo;
 
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -11,9 +10,9 @@ public class Movimiento {
 	private char operacion;
 	private float importe;
 	private float saldoResultante;
-	
-	public Movimiento() {}
 
+	public Movimiento() {
+	}
 
 	public Movimiento(Timestamp fecha, Cuenta cuenta, char operacion, float importe, float saldoResultante) {
 		super();
@@ -23,8 +22,6 @@ public class Movimiento {
 		this.importe = importe;
 		this.saldoResultante = saldoResultante;
 	}
-
-
 
 	public Timestamp getFecha() {
 		return fecha;
@@ -65,10 +62,10 @@ public class Movimiento {
 	public void setSaldoResultante(float saldoResultante) {
 		this.saldoResultante = saldoResultante;
 	}
-	
-	
-	
-	
-	
-	
+
+	public String toString() {
+		return "Fecha: " + fecha + " Importe: " + importe + " Saldo resultante: " + saldoResultante;
+
+	}
+
 }

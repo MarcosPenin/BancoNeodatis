@@ -1,18 +1,27 @@
 package controlador;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.neodatis.odb.ODB;
+import org.neodatis.odb.ODBRuntimeException;
+import org.neodatis.odb.ObjectValues;
 import org.neodatis.odb.Objects;
+import org.neodatis.odb.Values;
 import org.neodatis.odb.core.query.IQuery;
+import org.neodatis.odb.core.query.criteria.And;
 import org.neodatis.odb.core.query.criteria.ICriterion;
 import org.neodatis.odb.core.query.criteria.Where;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
+import org.neodatis.odb.impl.core.query.values.ValuesCriteriaQuery;
 
 import modelo.*;
 import vista.ConsultasVista;
 import vista.Mensajes;
+import vista.PedirDatos;
 
 public class Consultar {
 
@@ -32,7 +41,7 @@ public class Consultar {
 
 	public static void clientesRicos(ODB odb) {
 
-		ICriterion criterio = Where.ge("saldoActual", 201.000);
+		ICriterion criterio = Where.ge("saldoActual", 201000);
 		IQuery query = new CriteriaQuery(CuentaCorriente.class, criterio);
 		Objects cuentas = odb.getObjects(query);
 
@@ -44,6 +53,7 @@ public class Consultar {
 			while (cuentas.hasNext()) {
 				CuentaCorriente cuenta = (CuentaCorriente) cuentas.next();
 				for (Cliente c : cuenta.getClientes()) {
+			
 					clientesRicos.add(c);
 				}
 			}
@@ -60,22 +70,25 @@ public class Consultar {
 
 		// ICriterion criterio = Where.lt("saldoActual", 0);
 		// IQuery query = new CriteriaQuery(Cuenta.class, criterio);
-		// Es más sencillo sacando los clientes
 
-		IQuery query = new CriteriaQuery(CuentaCorriente.class);
-		Objects<Cliente> clientes = odb.getObjects(query);
+		IQuery query = new CriteriaQuery(Cliente.class);
+		Objects clientes = odb.getObjects(query);
 		int saldoTotalCliente = 0;
 		boolean flag = false;
 
 		if (!clientes.isEmpty()) {
+			Mensajes.clientesNumRojosCabecera();
 			while (clientes.hasNext()) {
-				Cliente cliente = clientes.next();
-				for (Cuenta c : cliente.getCuentas()) {
-					saldoTotalCliente += c.getSaldoActual();
-				}
-				if (saldoTotalCliente < 0) {
-					ConsultasVista.imprimirCliente(cliente);
-					flag = true;
+				Cliente cliente = (Cliente) clientes.next();
+				saldoTotalCliente=0;
+				if (cliente.getCuentas() != null) {
+					for (Cuenta c : cliente.getCuentas()) {
+						saldoTotalCliente += c.getSaldoActual();
+					}
+					if (saldoTotalCliente < 0) {
+						ConsultasVista.imprimirCliente(cliente);
+						flag = true;
+					}
 				}
 			}
 			if (!flag) {
@@ -88,4 +101,60 @@ public class Consultar {
 
 	}
 
+	public static void saldoMedioCuentasPlazo(ODB odb) {
+		IQuery query = new CriteriaQuery(CuentaPlazo.class);
+		Objects cuentas = odb.getObjects(query);
+		CuentaPlazo c;
+		float saldoTotal = 0;
+		int numCuentas = 0;
+
+		while (cuentas.hasNext()) {
+			c = (CuentaPlazo) cuentas.next();
+			numCuentas++;
+			saldoTotal += c.getSaldoActual();
+		}
+		float saldoMedio = saldoTotal / numCuentas;
+		Mensajes.saldoMedioCuentasPlazo(saldoMedio);
+
+	}
+
+	/*
+	 * try { Values val = odb.getValues(new
+	 * ValuesCriteriaQuery(CuentaPlazo.class).avg("saldoActual")); ObjectValues ov =
+	 * ov = val.nextValues(); Mensajes.saldoMedioCuentasPlazo(ov); } catch
+	 * (ArithmeticException e) { Values val2 = odb .getValues(new
+	 * ValuesCriteriaQuery(CuentaPlazo.class).sum("saldoActual").count("saldoActual"
+	 * )); ObjectValues ov2 = val2.nextValues(); float media; BigDecimal sumaSaldo =
+	 * (BigDecimal) ov2.getByIndex(0); BigInteger cuentas = (BigInteger)
+	 * ov2.getByIndex(1); media = sumaSaldo.floatValue() / cuentas.floatValue();
+	 * Mensajes.saldoMedioCuentasPlazo(media); }
+	 * 
+	 * 
+	 * }
+	 */
+	public static void extractoMovimientos(ODB odb) {
+
+		int numero = PedirDatos.pedirNumCuenta();
+		IQuery query = new CriteriaQuery(CuentaCorriente.class, Where.equal("numero", numero));
+		CuentaCorriente c;
+		boolean flag = false;
+		try {
+			c = (CuentaCorriente) odb.getObjects(query).getFirst();
+			Timestamp t1 = PedirDatos.pedirFechaInicio();
+			Timestamp t2 = PedirDatos.pedirFechaFin();
+			for (Movimiento m : c.getMovimientos()) {
+				if (m.getFecha().after(t1) && m.getFecha().before(t2)) {
+					ConsultasVista.imprimirMovimiento(m);
+					flag = true;
+				}
+			}
+			if (!flag) {
+				Mensajes.sinMovimientos();
+			}
+
+		} catch (ODBRuntimeException e) {
+			Mensajes.cuentaNoExiste();
+		}
+
+	}
 }

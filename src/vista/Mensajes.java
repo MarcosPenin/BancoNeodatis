@@ -1,5 +1,8 @@
 package vista;
 
+import org.neodatis.odb.ObjectValues;
+import org.neodatis.odb.Values;
+
 import modelo.CuentaPlazo;
 
 public class Mensajes {
@@ -45,7 +48,7 @@ public class Mensajes {
 	}
 
 	public static void clientesRicos() {
-		System.out.println("CLIENTES CON MÁS DE UNA CUENTA CORRIENTE\n");
+		System.out.println("CLIENTES CON CUENTAS CORRIENTES CON MÁS DE 200.000€\n");
 		
 	}
 
@@ -62,5 +65,30 @@ public class Mensajes {
 	public static void sinClientesNumerosRojos() {
 		System.out.println("No existen clientes en números rojos");
 	}
+
+	public static void saldoMedioCuentasPlazo(Values val) {
+		System.out.println();
+		
+	}
+
+	public static void saldoMedioCuentasPlazo(ObjectValues ov) {
+		System.out.printf("La media de saldo de las cuentas a plazo es de " + ov.getByIndex(0));
+		
+	}
+	public static void saldoMedioCuentasPlazo(Float f) {
+		System.out.printf("La media de saldo de las cuentas a plazo es de " + f);
+		
+	}
+
+	public static void sinMovimientos() {
+		System.out.println("La cuenta buscada no tiene movimientos entre esas fechas");
+		
+	}
+
+	public static void clientesNumRojosCabecera() {
+		System.out.println("CLIENTES EN NÚMEROS ROJOS\n");
+		
+	}
+	
 
 }

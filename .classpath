@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/usuario/Desktop/DAM/AADD/BancoNeodatis/lib/neodatis-odb-1.9.30.689 .jar"/>
+	<classpathentry kind="lib" path="E:/AADD/BancoNeodatis/lib/neodatis-odb-1.9.30.689 .jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

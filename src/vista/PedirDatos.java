@@ -2,6 +2,8 @@ package vista;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -86,8 +88,42 @@ public class PedirDatos {
 
 	public static int pedirIntereses() {
 		System.out.println("Introduce los nuevos intereses");
-		int intereses=ControlData.lerInt(sc);
+		int intereses = ControlData.lerInt(sc);
 		return intereses;
+	}
+
+	public static Timestamp pedirFechaInicio() {
+		Timestamp timestamp = null;
+		do {
+			System.out.println("Introduce la fecha de inicio. FORMATO: yyyy-MM-dd hh:mm:ss");
+			String fecha = sc.nextLine();
+			try {
+				var date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(fecha);
+				timestamp = new Timestamp(date.getTime());		
+			} catch (ParseException exception) {
+				System.out.println("Formato incorrecto. FORMATO: yyyy-MM-dd hh:mm:ss");
+			}
+		} while (timestamp == null);
+
+		return timestamp;
+	}
+
+	public static Timestamp pedirFechaFin() {
+		Timestamp timestamp = null;
+		do {
+			System.out.println("Introduce la fecha de fin. FORMATO: yyyy-MM-dd hh:mm:ss");
+			String fecha = sc.nextLine();
+			try {
+				var date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(fecha);
+				timestamp = new Timestamp(date.getTime());
+
+			} catch (ParseException exception) {
+				System.out.println("Formato incorrecto. FORMATO: yyyy-MM-dd hh:mm:ss");
+
+			}
+		} while (timestamp == null);
+
+		return timestamp;
 	}
 
 }

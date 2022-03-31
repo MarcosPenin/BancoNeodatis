@@ -19,7 +19,8 @@ public class Insertar {
 		Objects cuentasRepetidas = odb.getObjects(query);
 		if (cuentasRepetidas.isEmpty()) {
 			Cliente cl = recuperarCliente(odb);
-			c.addCliente(cl);
+			cl.addCuenta(c);
+			c.addCliente(cl);	
 			odb.store(c);
 			odb.commit();
 			Mensajes.cuentaCreada();
@@ -35,6 +36,7 @@ public class Insertar {
 		Objects cuentasRepetidas = odb.getObjects(query);
 		if (cuentasRepetidas.isEmpty()) {
 			Cliente cl = recuperarCliente(odb);
+			cl.addCuenta(c);
 			c.addCliente(cl);
 			odb.store(c);
 			odb.commit();

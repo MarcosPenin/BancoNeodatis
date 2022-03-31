@@ -1,14 +1,16 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 public class CuentaCorriente extends Cuenta {
 
 	private ArrayList<Movimiento> movimientos;
 
-	public CuentaCorriente() {}
-	
+	public CuentaCorriente() {
+	}
+
 	public CuentaCorriente(int numero, String sucursal, float saldoActual, Set<Cliente> clientes) {
 		super(numero, sucursal, saldoActual, clientes);
 	}
@@ -28,9 +30,15 @@ public class CuentaCorriente extends Cuenta {
 	}
 
 	public void addMovimiento(Movimiento m) {
-		this.movimientos.add(m);
+
+		if (movimientos == null) {
+			ArrayList<Movimiento> nuevosMovimientos = new ArrayList<>();
+			nuevosMovimientos.add(m);
+			movimientos = nuevosMovimientos;
+		} else {
+			this.movimientos.add(m);
+		}
+
 	}
-	
-	
-	
+
 }
