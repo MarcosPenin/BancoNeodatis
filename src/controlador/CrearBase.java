@@ -22,6 +22,11 @@ public class CrearBase {
 		CuentaPlazo c3=new CuentaPlazo(3,"Lugo",3000,null,3,"2023-04-04",2000);
 		CuentaPlazo c4=new CuentaPlazo(4,"Ourense",5000,null,3,"2024-04-04",3000);
 		
+		CuentaCorriente c5=new CuentaCorriente(5,"Vigo",200000000,null,null);
+		CuentaCorriente c6=new CuentaCorriente(6,"Santiago",-10000,null,null);
+		
+		
+		
 		Cliente cl1=new Cliente("11111111A","Cliente1",null);
 		Set<Cuenta> cuentasCl1=new HashSet<>();
 		cuentasCl1.add(c1);
@@ -39,6 +44,20 @@ public class CrearBase {
 		cuentasCl3.add(c3);
 		cuentasCl3.add(c4);
 		cl3.setCuentas(cuentasCl3);
+		
+		Cliente cl5=new Cliente("55555555P","Cliente5",null);
+		Set<Cuenta> cuentasCl5=new HashSet<>();
+		cuentasCl5.add(c5);
+		cl5.setCuentas(cuentasCl5);
+		
+		Cliente cl6=new Cliente("66666666P","Cliente6",null);
+		Set<Cuenta> cuentasCl6=new HashSet<>();
+		cuentasCl6.add(c6);
+		cl6.setCuentas(cuentasCl6);
+		
+				
+		
+		
 		
 		Timestamp t1=new Timestamp(1999,11,11,11,11,11,11);
 		Timestamp t2=new Timestamp(1500,1,1,1,1,1,1);
@@ -66,6 +85,16 @@ public class CrearBase {
 		clientesC4.add(cl3);
 		c4.setClientes(clientesC4);
 		
+		Set<Cliente> clientesC5=new HashSet<>();
+		clientesC5.add(cl5);
+		c5.setClientes(clientesC5);
+		
+		Set<Cliente> clientesC6=new HashSet<>();
+		clientesC6.add(cl6);
+		c6.setClientes(clientesC6);
+		
+		
+		
 		ArrayList<Movimiento>movimientosC1=new ArrayList<>();
 		movimientosC1.add(m1);
 		movimientosC1.add(m2);		
@@ -75,6 +104,8 @@ public class CrearBase {
 		odb.store(c2);
 		odb.store(c3);
 		odb.store(c4);
+		odb.store(c5);
+		odb.store(c6);
 			
 		odb.commit();
 	

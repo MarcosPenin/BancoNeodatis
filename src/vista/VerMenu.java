@@ -84,7 +84,7 @@ public class VerMenu {
 		ArrayList<String> opciones = new ArrayList<String>();
 		opciones.add("Altas");
 		opciones.add("Modificar intereses en Cuenta a plazo");
-		opciones.add("Dar de baja un cliente en una cuenta");
+		opciones.add("Dar de baja un cliente en una Cuenta a Plazo");
 		opciones.add("Mostrar clientes cuyo nombre empiece por C");
 		opciones.add("Mostrar clientes con una cuenta corriente con más de 200.000 euros");
 		opciones.add("Mostrar clientes en números rojos");

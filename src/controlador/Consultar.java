@@ -117,6 +117,9 @@ public class Consultar {
 		Mensajes.saldoMedioCuentasPlazo(saldoMedio);
 
 	}
+	
+	
+
 
 	/*
 	 * try { Values val = odb.getValues(new
@@ -157,4 +160,25 @@ public class Consultar {
 		}
 
 	}
+	
+	
+	public static void verTodo(ODB odb) {
+		IQuery query = new CriteriaQuery(Cuenta.class).setPolymorphic(true);
+		Objects cuentas = odb.getObjects(query);
+		Cuenta c;
+
+		while (cuentas.hasNext()) {
+			c = (Cuenta) cuentas.next();
+			ConsultasVista.imprimirCuenta(c);
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

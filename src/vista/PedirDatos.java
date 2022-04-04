@@ -46,7 +46,7 @@ public class PedirDatos {
 	}
 
 	public static String pedirDni() {
-		System.out.println("Introduce el Dni del cliente al que asignarás esta cuenta");
+		System.out.println("Introduce el Dni del cliente");
 		String dni = sc.nextLine();
 		return dni;
 	}

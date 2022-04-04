@@ -27,12 +27,13 @@ public class Borrar {
 				}
 				if (it.next() instanceof CuentaPlazo) {
 					it.remove();
+					Mensajes.cuentaBorrada();
 				} else {
 					Mensajes.noEsPlazo();
 				}
 			}
 		} catch (ODBRuntimeException e) {
-			Mensajes.cuentaNoExiste();
+			Mensajes.cuentaNoAsignada();
 		}
 
 	}

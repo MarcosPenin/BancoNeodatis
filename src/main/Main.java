@@ -11,12 +11,16 @@ public class Main {
 	public static void main(String[] args) {
 		ODBServer server = Servidor.crearServidor();
 		ODB odb = ClienteODB.iniciarCliente();
-		// CrearBase.crear(odb);
+		//CrearBase.crear(odb);
 		VerMenu.menuPrincipal(odb);
-
 		odb.commit();
 		odb.close();
 		server.close();
-
+	
 	}
+	
+	
+	
+	
+	
 }

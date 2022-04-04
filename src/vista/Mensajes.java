@@ -18,7 +18,7 @@ public class Mensajes {
 	}
 
 	public static void cuentaNoExiste() {
-		System.out.println("La cuenta que busca no existe");
+		System.out.println("La cuenta que busca no existe o no es del tipo adecuado");
 
 	}
 
@@ -87,6 +87,15 @@ public class Mensajes {
 
 	public static void clientesNumRojosCabecera() {
 		System.out.println("CLIENTES EN NÚMEROS ROJOS\n");
+		
+	}
+
+	public static void cuentaNoAsignada() {
+		System.out.println("Ese cliente no tiene asignada esa cuenta");	
+	}
+
+	public static void cuentaBorrada() {
+		System.out.println("Se ha quitado la cuenta");
 		
 	}
 	

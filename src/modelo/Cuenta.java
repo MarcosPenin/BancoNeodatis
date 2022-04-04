@@ -64,4 +64,18 @@ public abstract class Cuenta implements Serializable {
 		}
 	}
 
+	public String toString() {
+		String respuesta="Número: "+numero+" Saldo actual: "+saldoActual+" Clientes: ";
+		for(Cliente x:clientes) {
+			respuesta+="\n";
+			respuesta+=x.toString();		
+		}
+		return respuesta;
+	}
+	
+	
+	
+	
+	
+	
 }
