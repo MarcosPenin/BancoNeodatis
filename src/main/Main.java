@@ -16,11 +16,6 @@ public class Main {
 		odb.commit();
 		odb.close();
 		server.close();
-	
 	}
-	
-	
-	
-	
 	
 }

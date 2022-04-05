@@ -53,7 +53,7 @@ public class Consultar {
 			while (cuentas.hasNext()) {
 				CuentaCorriente cuenta = (CuentaCorriente) cuentas.next();
 				for (Cliente c : cuenta.getClientes()) {
-			
+
 					clientesRicos.add(c);
 				}
 			}
@@ -80,7 +80,7 @@ public class Consultar {
 			Mensajes.clientesNumRojosCabecera();
 			while (clientes.hasNext()) {
 				Cliente cliente = (Cliente) clientes.next();
-				saldoTotalCliente=0;
+				saldoTotalCliente = 0;
 				if (cliente.getCuentas() != null) {
 					for (Cuenta c : cliente.getCuentas()) {
 						saldoTotalCliente += c.getSaldoActual();
@@ -102,6 +102,26 @@ public class Consultar {
 	}
 
 	public static void saldoMedioCuentasPlazo(ODB odb) {
+
+		try {
+			Values val = odb.getValues(new ValuesCriteriaQuery(CuentaPlazo.class).avg("saldoActual"));
+			ObjectValues ov = ov = val.nextValues();
+			Mensajes.saldoMedioCuentasPlazo(ov);
+		} catch (ArithmeticException e) {
+			Values val2 = odb
+					.getValues(new ValuesCriteriaQuery(CuentaPlazo.class).sum("saldoActual").count("saldoActual"));
+			ObjectValues ov2 = val2.nextValues();
+			float media;
+			BigDecimal sumaSaldo = (BigDecimal) ov2.getByIndex(0);
+			BigInteger cuentas = (BigInteger) ov2.getByIndex(1);
+			media = sumaSaldo.floatValue() / cuentas.floatValue();
+			Mensajes.saldoMedioCuentasPlazo(media);
+		}
+
+	}
+	
+	/* Sin Values Query
+	public static void saldoMedioCuentasPlazo(ODB odb) {
 		IQuery query = new CriteriaQuery(CuentaPlazo.class);
 		Objects cuentas = odb.getObjects(query);
 		CuentaPlazo c;
@@ -115,26 +135,9 @@ public class Consultar {
 		}
 		float saldoMedio = saldoTotal / numCuentas;
 		Mensajes.saldoMedioCuentasPlazo(saldoMedio);
-
 	}
-	
-	
+*/
 
-
-	/*
-	 * try { Values val = odb.getValues(new
-	 * ValuesCriteriaQuery(CuentaPlazo.class).avg("saldoActual")); ObjectValues ov =
-	 * ov = val.nextValues(); Mensajes.saldoMedioCuentasPlazo(ov); } catch
-	 * (ArithmeticException e) { Values val2 = odb .getValues(new
-	 * ValuesCriteriaQuery(CuentaPlazo.class).sum("saldoActual").count("saldoActual"
-	 * )); ObjectValues ov2 = val2.nextValues(); float media; BigDecimal sumaSaldo =
-	 * (BigDecimal) ov2.getByIndex(0); BigInteger cuentas = (BigInteger)
-	 * ov2.getByIndex(1); media = sumaSaldo.floatValue() / cuentas.floatValue();
-	 * Mensajes.saldoMedioCuentasPlazo(media); }
-	 * 
-	 * 
-	 * }
-	 */
 	public static void extractoMovimientos(ODB odb) {
 
 		int numero = PedirDatos.pedirNumCuenta();
@@ -160,8 +163,7 @@ public class Consultar {
 		}
 
 	}
-	
-	
+
 	public static void verTodo(ODB odb) {
 		IQuery query = new CriteriaQuery(Cuenta.class).setPolymorphic(true);
 		Objects cuentas = odb.getObjects(query);
@@ -173,12 +175,5 @@ public class Consultar {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
